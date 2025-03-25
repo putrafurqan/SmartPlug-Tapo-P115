@@ -23,7 +23,7 @@ A Python application that monitors and records energy usage data from TAPO P115 
 1. Clone this repository:
    ```bash
    git clone git@github.com:putrafurqan/SmartPlug-Tapo-P115.git
-   cd tapo-p115-monitor
+   cd SmartPlug-Tapo-P115
    ```
 
 2. Install the required dependencies:
@@ -31,7 +31,7 @@ A Python application that monitors and records energy usage data from TAPO P115 
    pip install -r requirements.txt
    ```
 
-3. Create a `.env` file based on the `development.env` template and fill in your credentials:
+3. Create a new `.env` from the template and fill in your credentials:
    ```
    TAPO_USERNAME=your_tapo_email
    TAPO_PASSWORD=your_tapo_password
