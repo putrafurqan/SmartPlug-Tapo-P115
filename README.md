@@ -22,7 +22,7 @@ A Python application that monitors and records energy usage data from TAPO P115 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/tapo-p115-monitor.git
+   git clone git@github.com:putrafurqan/SmartPlug-Tapo-P115.git
    cd tapo-p115-monitor
    ```
 
