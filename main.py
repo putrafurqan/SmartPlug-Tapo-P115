@@ -1,56 +1,74 @@
 import os
 from dotenv import load_dotenv
+
+import threading
+import tkinter as tk
+
 import asyncio
-from datetime import datetime, timedelta
 from tapo import ApiClient
 from tapo.requests import EnergyDataInterval
+from datetime import datetime, timedelta, timezone
 
-load_dotenv("development.env")
+from DatabaseHandler import DatabaseHandler
+from UserInterface import UserInterface 
 
-async def main():
+
+# Function to fetch data asynchronously
+async def fetch_smartplug_data(ui_instance):
+    env_directory = "development.env"   # Customize this to your own .env file
+    load_dotenv(env_directory) 
     tapo_username = os.getenv("TAPO_USERNAME")
     tapo_password = os.getenv("TAPO_PASSWORD")
     ip_address = os.getenv("SMARTPLUG_IP")
 
     client = ApiClient(tapo_username, tapo_password)
     device = await client.p115(ip_address)
-
-    print("Refreshing session...")
     await device.refresh_session()
 
-    print("Turning device on...")
-    await device.on()
-    await asyncio.sleep(2)
+    while True:
+        # Fetch raw device data
+        device_info_json = await device.get_device_info_json()
+        device_usage = await device.get_device_usage()
+        current_power = await device.get_current_power()
 
-    print("Turning device off...")
-    await device.off()
-    await asyncio.sleep(2)
+        # Set the start and end date for the energy data
+        start_date = datetime.now() - timedelta(days=7)
+        end_date = datetime.now()
 
-    print("Getting device info...")
-    device_info = await device.get_device_info()
-    print(f"Device info: {device_info.to_dict()}")
+        # Fetch raw energy data
+        energy_data = await device.get_energy_data(EnergyDataInterval.Daily, start_date, end_date)
 
-    print("Getting device info (JSON)...")
-    device_info_json = await device.get_device_info_json()
-    print(f"Device info JSON: {device_info_json}")
+        # Initialize the database handler
+        db_handler = DatabaseHandler()
 
-    print("Getting device usage...")
-    device_usage = await device.get_device_usage()
-    print(f"Device usage: {device_usage.to_dict()}")
+        # Process the raw data
+        structured_data = db_handler.process_device_data(device_info_json, device_usage, current_power, energy_data)
+        
+        db_handler.add_timestamps(structured_data, device_info_json["time_diff"])
+        db_handler.save_device_data(structured_data)
 
-    print("Getting current power...")
-    current_power = await device.get_current_power()
-    print(f"Current power: {current_power.to_dict()}")
+        # Extract data from structured_data to update the UI
+        ui_instance.data["power"] = structured_data["power_usage"]["current_power"]
+        ui_instance.data["status"] = "ON" if structured_data["device"]["status"]["is_on"] else "OFF"
+        ui_instance.data["signal"] = structured_data["device"]["network"]["signal_strength"]
 
-    print("Getting energy usage...")
-    energy_usage = await device.get_energy_usage()
-    print(f"Energy usage: {energy_usage.to_dict()}")
+        # Update the UI in the main thread
+        ui_instance.update_interface()
 
-    print("Getting energy data...")
-    start_date = datetime.now() - timedelta(days=7)
-    end_date = datetime.now()
-    energy_data = await device.get_energy_data(EnergyDataInterval.Daily, start_date, end_date)
-    print(f"Energy data: {energy_data.to_dict()}")
+        await asyncio.sleep()  # Fetch data every 5 seconds
+
+
+def start_async_loop(ui_instance):
+    asyncio.run(fetch_smartplug_data(ui_instance))
+
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    # Initialize TKinter and UI
+    root = tk.Tk()
+    ui_instance = UserInterface(root)
+
+    # Start the Tapo API async loop in a separate thread
+    threading.Thread(target=start_async_loop, args=(ui_instance,), daemon=True).start()
+
+    # Start the Tkinter main loop
+    root.mainloop()
