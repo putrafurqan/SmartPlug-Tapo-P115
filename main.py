@@ -55,7 +55,7 @@ async def fetch_smartplug_data(ui_instance):
         # Update the UI in the main thread
         ui_instance.update_interface()
 
-        await asyncio.sleep()  # Fetch data every 5 seconds
+        await asyncio.sleep(5)  # Fetch data every 5 seconds
 
 
 def start_async_loop(ui_instance):
