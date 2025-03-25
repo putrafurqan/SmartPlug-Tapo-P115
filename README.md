@@ -2,16 +2,6 @@
 
 A Python application that monitors and records energy usage data from TAPO P115 smart plugs, featuring both a graphical user interface and data logging capabilities.
 
-## Features
-
-- Real-time monitoring of power consumption
-- Device status tracking (ON/OFF)
-- Network signal strength visualization
-- Safety status indicators (overcurrent, overheat, protection)
-- Automatic data logging with timestamps
-- Historical energy data collection
-- Simple graphical interface
-
 ## Requirements
 
 - Python 3.7+
