@@ -1,2 +1,5 @@
 development.env
-database/
+database/*.json
+__pycache__/
+*.pyc
+tempCodeRunnerFile.py
