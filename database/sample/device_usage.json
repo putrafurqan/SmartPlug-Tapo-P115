@@ -1,0 +1,5 @@
+{
+    "power_usage": {"past30": 8, "past7": 8, "today": 8},
+    "saved_power": {"past30": 18, "past7": 18, "today": 18},
+    "time_usage": {"past30": 26, "past7": 26, "today": 26},
+}
