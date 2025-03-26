@@ -2,16 +2,6 @@
 
 A Python application that monitors and records energy usage data from TAPO P115 smart plugs, featuring both a graphical user interface and data logging capabilities.
 
-## Features
-
-- Real-time monitoring of power consumption
-- Device status tracking (ON/OFF)
-- Network signal strength visualization
-- Safety status indicators (overcurrent, overheat, protection)
-- Automatic data logging with timestamps
-- Historical energy data collection
-- Simple graphical interface
-
 ## Requirements
 
 - Python 3.7+
@@ -22,8 +12,8 @@ A Python application that monitors and records energy usage data from TAPO P115 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/tapo-p115-monitor.git
-   cd tapo-p115-monitor
+   git clone git@github.com:putrafurqan/SmartPlug-Tapo-P115.git
+   cd SmartPlug-Tapo-P115
    ```
 
 2. Install the required dependencies:
@@ -31,7 +21,7 @@ A Python application that monitors and records energy usage data from TAPO P115 
    pip install -r requirements.txt
    ```
 
-3. Create a `.env` file based on the `development.env` template and fill in your credentials:
+3. Create a new `.env` from the template and fill in your credentials:
    ```
    TAPO_USERNAME=your_tapo_email
    TAPO_PASSWORD=your_tapo_password
