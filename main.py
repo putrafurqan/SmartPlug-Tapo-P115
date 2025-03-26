@@ -71,6 +71,9 @@ async def fetch_smartplug_data(ui_instance):
             ui_instance.data["power"] = structured_data["power_usage"]["current_power"]
             ui_instance.data["status"] = "ON" if structured_data["device"]["status"]["is_on"] else "OFF"
             ui_instance.data["signal"] = structured_data["device"]["network"]["signal_strength"]
+            ui_instance.data["bill"] = structured_data["bill"]["monthly"]
+            ui_instance.data["power_usage"] = structured_data["power_usage"]["monthly"]
+            ui_instance.data["carbon_emission"] = structured_data["carbon_emission"]["current_emission"]
 
             ui_instance.update_interface()
         except Exception as e:
