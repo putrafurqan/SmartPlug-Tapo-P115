@@ -3,11 +3,17 @@ from tkinter import Label, Button, Frame
 import random
 
 class UserInterface:
-    def __init__(self, master):
+    def __init__(self, master, device, data, callback_power, callback_refresh):
         self.master = master
         self.master.title("Live Monitoring: TAPO P115 Smart Plug")
         self.master.geometry("400x400")
         self.master.configure(bg="#f0f0f0")
+
+        self.callback_power = callback_power
+        self.callback_refresh = callback_refresh
+
+        self.device = device
+        self.data = data
 
         self.create_widgets()
         self.data = {
@@ -18,6 +24,9 @@ class UserInterface:
             "protection": "Normal",  # str: Protection status, "Normal" or "Triggered"
             "signal": -60  # int: Signal strength in dBm (range: -80 to -30 dBm)
         }
+
+    def set_device(self, device):
+        self.device = device
 
     def create_widgets(self):
         self.frame = Frame(self.master, bg="#f0f0f0")
@@ -63,10 +72,10 @@ class UserInterface:
         self.protection_label.grid(row=0, column=2, padx=10, pady=5)
         self.protection_dot.grid(row=1, column=2, padx=10, pady=5)
 
-        self.power_button = Button(self.master, text="Power On/Off", font=("Arial", 14), bg="#FF0000", fg="white", activebackground="#BF0000")
+        self.power_button = Button(self.master, text="Power On/Off", font=("Arial", 14), bg="#FF0000", fg="white", activebackground="#BF0000", command=self.callback_power)
         self.power_button.pack(pady=20)
 
-        self.refresh_button = Button(self.master, text="Refresh Data", font=("Arial", 14), bg="#4CAF50", fg="white", activebackground="#45a049")
+        self.refresh_button = Button(self.master, text="Refresh Data", font=("Arial", 14), bg="#4CAF50", fg="white", activebackground="#45a049", command=self.callback_refresh)
         self.refresh_button.pack(pady=20)
         
 
