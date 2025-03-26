@@ -100,6 +100,9 @@ class DatabaseHandler:
                 "daily": self.calculate_bill(device_usage.power_usage.today),
                 "weekly": self.calculate_bill(device_usage.power_usage.past7),
                 "monthly": self.calculate_bill(device_usage.power_usage.past30)
+            },
+            "carbon_emission": {
+                "current_emission": current_power.current_power * 0.000646
             }
         }
 
