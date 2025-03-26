@@ -1,4 +1,4 @@
-# TAPO P115 Smart Plug Monitor
+![image](https://github.com/user-attachments/assets/1170e538-8b2b-42f3-8713-2982a3113c73)# TAPO P115 Smart Plug Monitor
 
 A Python application that monitors and records energy usage data from TAPO P115 smart plugs, featuring both a graphical user interface and data logging capabilities.
 
@@ -42,7 +42,8 @@ The application will:
 
 ### Interface Explanation
 
-![image](https://github.com/user-attachments/assets/04a727e9-d493-4b4d-984d-d6dd4607bc93)
+![image](https://github.com/user-attachments/assets/e453e8e5-88c8-4bf1-bfbf-a4bc7dd79f9d)
+
 
 
 1. **Signal Strength**: Visual indicator of WiFi signal quality (green = good, yellow = fair, red = poor)
@@ -51,11 +52,16 @@ The application will:
    - Orange: 200-1000W
    - Red: >1000W
 3. **Device Status**: ON (green) or OFF (red)
-4. **Status Indicators**: 
+4. **Bill** : Electricity bill in last 30 days (rate = Rp.1699,53/kWh)
+5. **Usage** : Total watt used in last 30 days
+6. **CO2 Emission** : Calculated CO2 emission (rate = 0.000646g/kWh)
+7. **Status Indicators**: 
    - Overcurrent (green/yellow)
    - Overheat (green/yellow)
    - Protection (green/yellow)
-5. **Refresh Button**: Manually refresh device data
+8. **Power Button** : Turn power on/off
+9. **Refresh Button**: Manually refresh device data
+
 
 ## Data Storage
 
