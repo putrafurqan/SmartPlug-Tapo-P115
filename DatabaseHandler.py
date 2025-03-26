@@ -36,6 +36,10 @@ class DatabaseHandler:
         })
 
         return data
+    
+    def calculate_bill(self, power_usage):
+        rate = 1699.53  # Rate in IDR per kWh
+        return (power_usage/1000) * rate
             
     def process_device_data(self, device_info_json, device_usage, current_power, energy_data):
         timezone_offset = device_info_json["time_diff"]
@@ -91,6 +95,11 @@ class DatabaseHandler:
                 "interval_minutes": energy_data.interval,
                 "start_timestamp": energy_data.start_timestamp,
                 "end_timestamp": energy_data.end_timestamp,
+            },
+            "bill": {
+                "daily": self.calculate_bill(device_usage.power_usage.today),
+                "weekly": self.calculate_bill(device_usage.power_usage.past7),
+                "monthly": self.calculate_bill(device_usage.power_usage.past30)
             }
         }
 
