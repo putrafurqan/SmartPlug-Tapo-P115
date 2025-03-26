@@ -63,8 +63,13 @@ class UserInterface:
         self.protection_label.grid(row=0, column=2, padx=10, pady=5)
         self.protection_dot.grid(row=1, column=2, padx=10, pady=5)
 
+        self.power_button = Button(self.master, text="Power On/Off", font=("Arial", 14), bg="#FF0000", fg="white", activebackground="#BF0000")
+        self.power_button.pack(pady=20)
+
         self.refresh_button = Button(self.master, text="Refresh Data", font=("Arial", 14), bg="#4CAF50", fg="white", activebackground="#45a049")
         self.refresh_button.pack(pady=20)
+        
+
 
     def update_interface(self):
         self.update_power(self.data["power"])
